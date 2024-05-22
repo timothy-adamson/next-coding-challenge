@@ -21,7 +21,7 @@ export default function Basket() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>Michael&apos;s Amazing Web Store</p>
+        {/* <p>Michael&apos;s Amazing Web Store</p> */}
         <div>
           <button className={styles.basket}>Basket: {itemCount} items</button>
           {itemOptions.map(({ productId }) => (

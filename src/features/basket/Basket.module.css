@@ -97,7 +97,8 @@
   }
 
   .grid {
-    /* TODO Look up how to make a single column list*/
+    grid-template-columns: unset;
+    grid-auto-flow: row;
     margin-bottom: 120px;
     max-width: 320px;
     text-align: center;
@@ -121,7 +122,7 @@
   }
 
   .description p,
-  .description div {
+  .description > div {
     display: flex;
     justify-content: center;
     position: fixed;
@@ -162,6 +163,6 @@
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {
-    /* TODO Look up how to make a 2 column list*/
+    grid-template-columns: repeat(2, minmax(50%, auto));
   }
 }
