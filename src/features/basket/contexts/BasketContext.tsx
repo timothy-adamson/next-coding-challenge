@@ -7,7 +7,6 @@ interface BasketContextValue {
   addToBasket: (productId: string) => void;
   removeFromBasket: (productId: string) => void;
   incrementQuantity: (productId: string, quantity: number) => void;
-  clearBasket: () => void;
 }
 
 export const BasketContext = createContext<BasketContextValue | null>(null);
@@ -16,6 +15,9 @@ export const BasketContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [items, setItems] = useState<BasketItems>({});
+
+  // For a scaling application with increasing state management functions, useReducer could be used
+  // Or, a state management library like Redux, Zustand, etc...
 
   const addToBasket = (productId: string) => {
     setItems((prevValue) => {
@@ -69,10 +71,6 @@ export const BasketContextProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
-  const clearBasket = () => {
-    setItems({});
-  };
-
   return (
     <BasketContext.Provider
       value={{
@@ -80,7 +78,6 @@ export const BasketContextProvider: FC<{ children: ReactNode }> = ({
         addToBasket,
         removeFromBasket,
         incrementQuantity,
-        clearBasket,
       }}
     >
       {children}

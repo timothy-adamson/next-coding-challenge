@@ -22,7 +22,7 @@ export const Basket = async () => {
     <main className={styles.main}>
       <BasketContextProvider>
         <ProductList itemOptions={products} />
-        <BasketSummary itemOptions={products} />
+        <BasketSummary />
       </BasketContextProvider>
     </main>
   );

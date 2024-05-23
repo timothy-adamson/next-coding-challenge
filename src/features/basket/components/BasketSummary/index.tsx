@@ -3,12 +3,9 @@ import { FC, useMemo } from "react";
 import styles from "./BasketSummary.module.css";
 import { useBasketContext } from "../../hooks/useBasketContext";
 import { getItemCount } from "../../utils/getItemCount";
-import { Product } from "../../types/basket.types";
 import QuantityControl from "../QuantityControl";
 
-export const BasketSummary: FC<{ itemOptions: Product[] }> = ({
-  itemOptions,
-}) => {
+export const BasketSummary: FC = () => {
   const { items, incrementQuantity } = useBasketContext();
 
   const itemCount = getItemCount(items);
