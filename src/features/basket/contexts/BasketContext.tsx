@@ -1,16 +1,13 @@
 "use client";
-import { FC, ReactNode, createContext, useState } from "react";
+import { FC, ReactNode, createContext, useEffect, useState } from "react";
 import { BasketItems } from "../types/basket.types";
 
 interface BasketContextValue {
   items: BasketItems;
-  addToBasket: (productId: string) => BasketItems;
-  removeFromBasket: (productId: string) => BasketItems;
-  incrementQuantity: (
-    productId: string,
-    quantity: number
-  ) => BasketItems | void;
-  clearBasket: () => BasketItems;
+  addToBasket: (productId: string) => void;
+  removeFromBasket: (productId: string) => void;
+  incrementQuantity: (productId: string, quantity: number) => void;
+  clearBasket: () => void;
 }
 
 export const BasketContext = createContext<BasketContextValue | null>(null);
@@ -21,61 +18,59 @@ export const BasketContextProvider: FC<{ children: ReactNode }> = ({
   const [items, setItems] = useState<BasketItems>({});
 
   const addToBasket = (productId: string) => {
-    const existingItem = items[productId];
+    setItems((prevValue) => {
+      const existingItem = prevValue[productId];
 
-    const newQuantity = existingItem ? existingItem.quantity + 1 : 1;
+      const newQuantity = existingItem ? existingItem.quantity + 1 : 1;
 
-    const updatedItems = {
-      ...items,
-      [productId]: { productId, quantity: newQuantity },
-    };
+      const updatedItems = {
+        ...items,
+        [productId]: { productId, quantity: newQuantity },
+      };
 
-    setItems(updatedItems);
-
-    return updatedItems;
+      return updatedItems;
+    });
   };
 
   const removeFromBasket = (productId: string) => {
-    const updatedItems = items;
+    setItems((prevValue) => {
+      const { [productId]: existingProduct, ...remainingItems } = prevValue;
 
-    delete updatedItems[productId];
-
-    setItems(updatedItems);
-
-    return updatedItems;
+      return remainingItems;
+    });
   };
 
   const incrementQuantity = (productId: string, quantity: number) => {
-    const existingItem = items[productId];
+    setItems((prevValue) => {
+      const existingItem = prevValue[productId];
 
-    if (!existingItem) {
-      console.error(`Product ID: ${productId} not found in basket`);
+      if (!existingItem) {
+        console.error(`Product ID: ${productId} not found in basket`);
 
-      return;
-    }
+        return prevValue;
+      }
 
-    const newQuantity = existingItem
-      ? Math.max(0, existingItem.quantity + quantity)
-      : 1;
+      const newQuantity = existingItem
+        ? Math.max(0, existingItem.quantity + quantity)
+        : 1;
 
-    if (newQuantity === 0) {
-      return removeFromBasket(productId);
-    }
+      if (newQuantity === 0) {
+        const { [productId]: existingProduct, ...remainingItems } = prevValue;
 
-    const updatedItems = {
-      ...items,
-      [productId]: { productId, quantity: newQuantity },
-    };
+        return remainingItems;
+      }
 
-    setItems(updatedItems);
+      const updatedItems = {
+        ...items,
+        [productId]: { productId, quantity: newQuantity },
+      };
 
-    return updatedItems;
+      return updatedItems;
+    });
   };
 
   const clearBasket = () => {
     setItems({});
-
-    return {};
   };
 
   return (

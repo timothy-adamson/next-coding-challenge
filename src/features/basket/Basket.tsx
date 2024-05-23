@@ -21,8 +21,8 @@ export const Basket = async () => {
   return (
     <main className={styles.main}>
       <BasketContextProvider>
-        <BasketSummary itemOptions={products} />
         <ProductList itemOptions={products} />
+        <BasketSummary itemOptions={products} />
       </BasketContextProvider>
     </main>
   );

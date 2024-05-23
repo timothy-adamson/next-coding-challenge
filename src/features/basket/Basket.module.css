@@ -1,20 +1,8 @@
 .main {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
-
-.main button {
-  cursor: pointer;
-  padding: 1rem 1.2rem;
-  margin: 0.2rem;
-  border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
-  font-family: inherit;
-  text-align: left;
-  transition: background 200ms, border 200ms;
+  min-height: 50vh;
 }
 
 /* Enable hover only on non-touch devices */
