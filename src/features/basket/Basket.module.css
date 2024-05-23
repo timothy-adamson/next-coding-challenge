@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50vh;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .main button:hover {
+    background: rgba(var(--card-rgb), 0.1);
+    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .main {
+    padding-top: 8rem;
+  }
+}

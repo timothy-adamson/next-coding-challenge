@@ -1,0 +1,49 @@
+.basket-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  list-style: none;
+  min-height: 24vh;
+  white-space: nowrap;
+}
+
+.basket-summary li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.basket-summary button {
+  cursor: pointer;
+  margin-top: 4px;
+  padding: 0.4rem;
+  border-radius: var(--border-radius);
+  background: rgba(var(--card-rgb), 0);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  font-family: inherit;
+  text-align: left;
+  transition: background 200ms, border 200ms;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .basket-summary {
+    position: fixed;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 1rem 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(var(--background-end-rgb)) 40%
+    );
+  }
+
+  .basket-summary li {
+    padding-left: 0;
+  }
+}
