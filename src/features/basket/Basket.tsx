@@ -1,48 +1,31 @@
-"use client";
 import styles from "./Basket.module.css";
-import { useBasketContext } from "./hooks/useBasketContext";
-import { getItemCount } from "./utils/getItemCount";
-import { ItemCount } from "./components/ItemCount";
-import { itemDescriptions } from "./config/itemDescriptions";
-import { ItemOptionButton } from "./components/ItemOptionButton";
+import { Product } from "./types/basket.types";
+import BasketSummary from "./components/BasketSummary";
+import ProductList from "./components/ProductList";
+import { BasketContextProvider } from "./contexts/BasketContext";
+import { products } from "./config/products";
 
-export default function Basket() {
-  const { items, addToBasket } = useBasketContext();
+const getItemOptions = async () => {
+  // Simulate an API call to get products
+  const fakeApiCall = () =>
+    new Promise<Product[]>((resolve) => {
+      resolve(products);
+    });
 
-  const itemOptions = Object.entries(itemDescriptions).map(
-    ([productId, description]) => ({
-      productId,
-      description,
-    })
-  );
+  return await fakeApiCall();
+};
 
-  const itemCount = getItemCount(items);
+export const Basket = async () => {
+  const products = await getItemOptions();
 
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        {/* <p>Michael&apos;s Amazing Web Store</p> */}
-        <div>
-          <button className={styles.basket}>Basket: {itemCount} items</button>
-          {itemOptions.map(({ productId }) => (
-            <ItemCount
-              key={`item-count-${productId}`}
-              name={productId}
-              count={items[productId]?.quantity || 0}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        {itemOptions.map(({ productId, description }) => (
-          <ItemOptionButton
-            productId={productId}
-            description={description}
-            onClick={() => addToBasket(productId)}
-          />
-        ))}
-      </div>
+      <BasketContextProvider>
+        <BasketSummary itemOptions={products} />
+        <ProductList itemOptions={products} />
+      </BasketContextProvider>
     </main>
   );
-}
+};
+
+export default Basket;
